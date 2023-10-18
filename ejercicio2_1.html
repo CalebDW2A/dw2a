@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de días</title>
+</head>
+<body>
+    <h1>Calculadora de días faltantes o transcurridos</h1>
+    
+    <label for="anio">Año (YYYY):</label>
+    <input type="text" id="anio">
+    
+    <label for="mes">Mes (MM):</label>
+    <input type="text" id="mes">
+    
+    <label for="dia">Día (DD):</label>
+    <input type="text" id="dia">
+    
+    <button onclick="calcularDias()">Calcular</button>
+    
+    <p id="resultado"></p>
+
+    <script>
+        function calcularDias() {
+            var anio = parseInt(document.getElementById('anio').value);
+            var mes = parseInt(document.getElementById('mes').value) - 1; // Los meses en JavaScript son de 0 a 11
+            var dia = parseInt(document.getElementById('dia').value);
+
+            if (isNaN(anio) || isNaN(mes) || isNaN(dia) || mes < 0 || mes > 11 || dia < 1 || dia > 31) {
+                alert("La fecha introducida no es válida.");
+                return;
+            }
+
+            var fechaIntroducida = new Date(anio, mes, dia);
+            var fechaActual = new Date();
+            var diferencia = fechaIntroducida - fechaActual;
+            const unDia = 24*60*60*1000; //milisegundos en un dia
+            var dias = Math.round(diferencia / unDia);
+
+            var resultado = document.getElementById('resultado');
+            if (dias === 0) {
+                resultado.textContent = "Hoy es la fecha introducida.";
+            } else if (dias > 0) {
+                resultado.textContent = "Faltan " + dias + " días para la fecha introducida.";
+            } else {
+                resultado.textContent = "Han pasado " + Math.abs(dias) + " días desde la fecha introducida.";
+            }
+        }
+    </script>
+</body>
+</html>
